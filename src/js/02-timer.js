@@ -40,18 +40,32 @@ function onCloseFunction (date) {
 }
 
 function onStartClick(){
+  
     refs.startButton.disabled = isDisabled;
     fp.destroy();
     refs.inputEl.disabled = isDisabled;
+
     calculationStart()
+
+
 };
 
 
 function calculationStart(){
-    setInterval(()=>{
+  let timerId = null;
+  timerId=setInterval(()=>{
         const restTime = convertMs(chosenDate - Date.now());
         markupChange(restTime);
+
+        const { days, hours, minutes, seconds } = restTime;
+        if (days <= 0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
+          clearInterval(timerId);
+          refs.startButton.disabled = !isDisabled;
+          refs.inputEl.disabled = !isDisabled;
+        }
     },1000);
+
+
 }
 
 function convertMs(ms) {
@@ -78,6 +92,7 @@ function markupChange ({days,hours,minutes,seconds}){
     refs.hours.textContent = addLeadingZero(hours);
     refs.minutes.textContent = addLeadingZero(minutes);
     refs.seconds.textContent = addLeadingZero(seconds);
+
 
 }
 function addLeadingZero(value) {

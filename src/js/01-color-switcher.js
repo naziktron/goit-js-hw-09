@@ -26,4 +26,6 @@ function onStopClick() {
     btnStart.disabled =  !isDisabled;
     btnStop.disabled =  isDisabled;
     clearInterval(timeInterval);
+    console.log();
 }
+
